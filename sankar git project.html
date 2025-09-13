@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Aurora One-Page — Unique Single File</title>
+    <meta
+      name="description"
+      content="A modern, single-file one-page HTML template with animated gradient, glass cards and smooth interactions."
+    />
+    <style>
+      /* ---------- Reset & base ---------- */
+      :root {
+        --bg: #0b1020;
+        --card: rgba(255, 255, 255, 0.06);
+        --glass: rgba(255, 255, 255, 0.06);
+        --muted: rgba(255, 255, 255, 0.65);
+        --accent1: #6dd3ff;
+        --accent2: #9b7bff;
+        --accent3: #ff9bd3;
+        --radius: 14px;
+        --glass-border: rgba(255, 255, 255, 0.06);
+        --fw-regular: 400;
+        --fw-bold: 700;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial;
+        color: #e9eef8;
+        background: radial-gradient(
+            1200px 600px at 10% 10%,
+            rgba(107, 181, 255, 0.06),
+            transparent
+          ),
+          radial-gradient(
+            1000px 400px at 90% 90%,
+            rgba(155, 123, 255, 0.04),
+            transparent
+          ),
+          var(--bg);
+        -webkit-font-smoothing: antialiased;
+        line-height: 1.4;
+        padding: 32px;
+      }
+
+      /* ---------- layout ---------- */
+      .wrap {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        gap: 28px;
+      }
+      header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .logo {
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--accent1), var(--accent2));
+        display: grid;
+        place-items: center;
+        font-weight: 700;
+        color: #071127;
+        box-shadow: 0 6px 18px rgba(11, 16, 32, 0.55);
+      }
+      .brand h1 {
+        font-size: 16px;
+        letter-spacing: 0.4px;
+      }
+      nav {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        padding: 8px 12px;
+        border-radius: 10px;
+        font-size: 14px;
+      }
+      nav a:hover {
+        background: linear-gradient(
+          90deg,
+          rgba(255, 255, 255, 0.03),
+          transparent
+        );
+        color: #fff;
+      }
+
+      /* ---------- hero ---------- */
+      .hero {
+        display: grid;
+        grid-template-columns: 1fr 380px;
+        gap: 28px;
+        align-items: center;
+      }
+      .hero-left {
+        padding: 28px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        border-radius: var(--radius);
+        backdrop-filter: blur(6px);
+        box-shadow: 0 8px 30px rgba(2, 6, 23, 0.6);
+      }
+      .kicker {
+        font-size: 13px;
+        color: var(--accent1);
+        font-weight: 600;
+        letter-spacing: 0.8px;
+        margin-bottom: 12px;
+      }
+      .headline {
+        font-size: 30px;
+        line-height: 1.05;
+        margin-bottom: 10px;
+      }
+      .lead {
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+      .cta-row {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .btn {
+        background: linear-gradient(90deg, var(--accent1), var(--accent2));
+        color: #071127;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-weight: 700;
+        border: none;
+        cursor: pointer;
+        box-shadow: 0 8px 24px rgba(107, 181, 255, 0.08);
+      }
+      .ghost {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        padding: 10px 14px;
+        border-radius: 12px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+
+      /* ---------- panels ---------- */
+      .panel {
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          rgba(255, 255, 255, 0.01)
+        );
+        border-radius: 16px;
+        padding: 18px;
+        border: 1px solid var(--glass-border);
+        backdrop-filter: blur(8px);
+      }
+
+      /* right hero card - rotating gradient canvas */
+      .hero-card {
+        height: 320px;
+        border-radius: 16px;
+        overflow: hidden;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .aurora {
+        position: absolute;
+        inset: 0;
+        background: conic-gradient(
+          from 180deg at 50% 50%,
+          rgba(109, 211, 255, 0.08),
+          rgba(155, 123, 255, 0.08),
+          rgba(255, 155, 211, 0.06)
+        );
+        filter: blur(46px);
+        transform: scale(1.3);
+        animation: drift 12s linear infinite;
+        mix-blend-mode: screen;
+      }
+      @keyframes drift {
+        0% {
+          transform: translateY(0) scale(1.25);
+        }
+        50% {
+          transform: translateY(-18px) scale(1.35);
+        }
+        100% {
+          transform: translateY(0) scale(1.25);
+        }
+      }
+
+      /* ---------- features ---------- */
+      .features {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+      }
+      .feature {
+        padding: 16px;
+        border-radius: 12px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .feature h3 {
+        margin-bottom: 8px;
+        font-size: 16px;
+      }
+      .feature p {
+        color: var(--muted);
+        font-size: 14px;
+      }
+
+      /* ---------- gallery ---------- */
+      .gallery {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+      .card {
+        aspect-ratio: 4/3;
+        border-radius: 12px;
+        overflow: hidden;
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          rgba(255, 255, 255, 0.02),
+          transparent
+        );
+      }
+      .card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .card .tag {
+        position: absolute;
+        left: 10px;
+        bottom: 10px;
+        padding: 8px 10px;
+        border-radius: 10px;
+        background: linear-gradient(
+          90deg,
+          rgba(0, 0, 0, 0.2),
+          rgba(0, 0, 0, 0.35)
+        );
+        font-size: 13px;
+      }
+
+      /* ---------- contact ---------- */
+      .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 280px;
+        gap: 18px;
+        align-items: start;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+      input,
+      textarea {
+        padding: 12px;
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        background: transparent;
+        color: inherit;
+        outline: none;
+      }
+      textarea {
+        min-height: 120px;
+        resize: vertical;
+      }
+      .meta {
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* ---------- footer ---------- */
+      footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 8px;
+        color: var(--muted);
+        font-size: 13px;
+      }
+
+      /* ---------- tiny interactions ---------- */
+      .theme-toggle {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        padding: 8px;
+        border-radius: 10px;
+        color: var(--muted);
+        cursor: pointer;
+      }
+      .pill {
+        display: inline-block;
+        padding: 6px 10px;
+        border-radius: 999px;
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.03);
+      }
+      .small {
+        font-size: 13px;
+      }
+      a.inline {
+        color: var(--accent3);
+        text-decoration: none;
+      }
+
+      /* ---------- responsiveness ---------- */
+      @media (max-width: 980px) {
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .features {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .gallery {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .contact-grid {
+          grid-template-columns: 1fr;
+        }
+        .wrap {
+          padding: 8px;
+        }
+      }
+      @media (max-width: 560px) {
+        .features {
+          grid-template-columns: 1fr;
+        }
+        .gallery {
+          grid-template-columns: 1fr;
+        }
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 12px;
+        }
+        .brand h1 {
+          font-size: 14px;
+        }
+        .headline {
+          font-size: 24px;
+        }
+      }
+
+      /* ---------- subtle entrance animation ---------- */
+      .fade-in {
+        opacity: 0;
+        transform: translateY(8px);
+        animation: enter 700ms ease forwards;
+      }
+      .delay-1 {
+        animation-delay: 100ms;
+      }
+      .delay-2 {
+        animation-delay: 200ms;
+      }
+      .delay-3 {
+        animation-delay: 300ms;
+      }
+      .delay-4 {
+        animation-delay: 400ms;
+      }
+      @keyframes enter {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header class="fade-in delay-1">
+        <div class="brand">
+          <div class="logo">A</div>
+          <h1>Aurora • Single Page</h1>
+        </div>
+
+        <nav>
+          <a href="#features">Features</a>
+          <a href="#gallery">Gallery</a>
+          <a href="#contact">Contact</a>
+          <button class="theme-toggle" id="themeToggle" title="Toggle accent">
+            ✨ Accent
+          </button>
+        </nav>
+      </header>
+
+      <section class="hero fade-in delay-2" id="home">
+        <div class="hero-left panel">
+          <div class="kicker">ONE-PAGE CONCEPT</div>
+          <div class="headline">
+            A minimal, modern single page with a playful aurora background.
+          </div>
+          <div class="lead">
+            Use this as a portfolio intro, product landing, or micro-site — all
+            in one tidy HTML file. Clean CSS, tiny JS, accessible markup.
+          </div>
+
+          <div class="cta-row">
+            <button class="btn" id="scrollFeatures">See Features</button>
+            <button class="ghost" id="downloadBtn">Download</button>
+          </div>
+
+          <div style="margin-top: 12px" class="meta small">
+            Built with <span class="pill">no frameworks</span>, works offline,
+            and easy to customize.
+          </div>
+        </div>
+
+        <div class="hero-card panel">
+          <div class="aurora" aria-hidden="true"></div>
+
+          <!-- center content over the gradient -->
+          <div
+            style="
+              position: relative;
+              z-index: 2;
+              text-align: center;
+              padding: 18px;
+            "
+          >
+            <svg
+              width="84"
+              height="84"
+              viewBox="0 0 24 24"
+              fill="none"
+              style="display: block; margin: 0 auto 10px"
+            >
+              <rect
+                x="2.5"
+                y="2.5"
+                width="19"
+                height="19"
+                rx="4"
+                stroke="white"
+                stroke-opacity="0.08"
+              />
+              <path
+                d="M8 12l2 2 6-6"
+                stroke="white"
+                stroke-width="1.4"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                opacity="0.95"
+              />
+            </svg>
+            <div style="font-weight: 700; font-size: 18px">
+              Ready-made micro UI
+            </div>
+            <div style="color: var(--muted); font-size: 13px; margin-top: 6px">
+              Light-weight, visually distinct, instantly adaptable.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" class="fade-in delay-3">
+        <div class="panel">
+          <h2 style="margin-bottom: 12px">Features</h2>
+          <div class="features" aria-hidden="false">
+            <div class="feature">
+              <h3>Animated Aurora</h3>
+              <p>
+                Soft, non-distracting gradient motion to bring life while
+                keeping content readable.
+              </p>
+            </div>
+            <div class="feature">
+              <h3>Glass Panels</h3>
+              <p>
+                Subtle frosted look using backdrop-filter for modern aesthetics
+                and depth.
+              </p>
+            </div>
+            <div class="feature">
+              <h3>Tiny & Fast</h3>
+              <p>
+                Single file, lightweight CSS + ~30 lines JS: easy to fork and
+                deploy anywhere.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="gallery" class="fade-in delay-4">
+        <div class="panel">
+          <h2 style="margin-bottom: 12px">Gallery</h2>
+          <div class="gallery" aria-label="Sample images">
+            <!-- placeholder images using data URLs: gradient blocks, but feel free to replace with real images -->
+            <div class="card">
+              <img
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='100%' height='100%' fill='%236dd3ff'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='40' fill='white' font-family='Arial'>Poster A</text></svg>"
+                alt="Poster A"
+              />
+              <div class="tag">Poster A</div>
+            </div>
+            <div class="card">
+              <img
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='100%' height='100%' fill='%239b7bff'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='40' fill='white' font-family='Arial'>Poster B</text></svg>"
+                alt="Poster B"
+              />
+              <div class="tag">Poster B</div>
+            </div>
+            <div class="card">
+              <img
+                src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'><rect width='100%' height='100%' fill='%23ff9bd3'/><text x='50%' y='50%' dominant-baseline='middle' text-anchor='middle' font-size='40' fill='white' font-family='Arial'>Poster C</text></svg>"
+                alt="Poster C"
+              />
+              <div class="tag">Poster C</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="fade-in delay-4">
+        <div class="panel contact-grid">
+          <div>
+            <h2 style="margin-bottom: 10px">Contact</h2>
+            <form id="contactForm" autocomplete="off" novalidate>
+              <input type="text" id="name" placeholder="Your name" required />
+              <input
+                type="email"
+                id="email"
+                placeholder="Email address"
+                required
+              />
+              <input type="text" id="subject" placeholder="Subject" />
+              <textarea
+                id="message"
+                placeholder="Write a message..."
+                required
+              ></textarea>
+              <div style="display: flex; gap: 10px; align-items: center">
+                <button class="btn" type="submit">Send</button>
+                <div class="meta small">
+                  Or email me at
+                  <a class="inline" href="mailto:hello@example.com"
+                    >hello@example.com</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <aside style="display: flex; flex-direction: column; gap: 12px">
+            <div class="panel" style="flex: 0">
+              <strong>Quick info</strong>
+              <div class="meta" style="margin-top: 8px">
+                Available for freelance projects, design collabs, and short
+                consulting sprints.
+              </div>
+              <div style="margin-top: 8px" class="pill">
+                Design • Code • Strategy
+              </div>
+            </div>
+
+            <div class="panel small">
+              <div><strong>Location</strong></div>
+              <div class="meta">India • Remote first</div>
+              <hr style="opacity: 0.06; margin: 8px 0" />
+              <div><strong>Skills</strong></div>
+              <div class="meta">
+                UI/UX, HTML/CSS, JS, Graphics, Minimal branding
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <footer class="fade-in delay-2">
+        <div>© <span id="year"></span> Aurora • Crafted in a single file</div>
+        <div class="meta">
+          Made with ♥ — <a class="inline" href="#home">Back to top</a>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      // Small JS enhancements: year, scroll, theme toggle, download
+      (function () {
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // smooth scroll to features
+        document
+          .getElementById("scrollFeatures")
+          .addEventListener("click", function () {
+            document
+              .getElementById("features")
+              .scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+
+        // accent swap (cycles accent colors)
+        const accents = [
+          ["#6dd3ff", "#9b7bff", "#ff9bd3"],
+          ["#ffb86b", "#ff7b7b", "#9b7bff"],
+          ["#7ef5a6", "#6dd3ff", "#9b7bff"],
+          ["#c68bff", "#ff9bd3", "#6dd3ff"],
+        ];
+        let ai = 0;
+        document.getElementById("themeToggle").addEventListener("click", () => {
+          ai = (ai + 1) % accents.length;
+          const [a, b, c] = accents[ai];
+          document.documentElement.style.setProperty("--accent1", a);
+          document.documentElement.style.setProperty("--accent2", b);
+          document.documentElement.style.setProperty("--accent3", c);
+        });
+
+        // form: fake submit
+        document
+          .getElementById("contactForm")
+          .addEventListener("submit", function (e) {
+            e.preventDefault();
+            const name = document.getElementById("name").value || "Friend";
+            alert(
+              "Thanks, " +
+                name +
+                "! (This is a demo — integrate a backend or email to actually send.)"
+            );
+            this.reset();
+          });
+
+        // download button: package page as .html blob
+        document
+          .getElementById("downloadBtn")
+          .addEventListener("click", function () {
+            const blob = new Blob([document.documentElement.outerHTML], {
+              type: "text/html",
+            });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "aurora-single-page.html";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+          });
+
+        // small accessibility: keyboard anchor focus reveal
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Tab") document.body.classList.add("show-focus");
+        });
+      })();
+    </script>
+  </body>
+</html>
